@@ -1,0 +1,14 @@
+
+
+CREATE COMPUTE MODULE addRealEstate_Extract_Exception_List_To_Environment
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyEntireMessage();
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot.JSON.Data.message = InputExceptionList;
+		SET OutputRoot.JSON.Data.code = 500;
+	END;
+END MODULE;

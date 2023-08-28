@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.5.0" xmlns:map="default">
+    <inlinedXMLSchema><![CDATA[<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="exceptionList" type="xsd:string"/>
+</xsd:schema>]]></inlinedXMLSchema>
+    <input path="jar:file://!com/ibm/etools/mft/map/xsds/assembly/Environment.xsd" var="var5"/>
+    <input derivedFrom="MB:JSON_schema_in_swagger_document" path="/vivareal-loader.yaml" var="var1"/>
+    <input inlinedXMLSchema="true" path="../schema_0.xsd" var="var4"/>
+    <input inlinedXMLSchema="true" path="../schema_0.xsd" var="var6"/>
+    <output path="jar:file://!com/ibm/etools/mft/map/xsds/assembly/Environment.xsd" var="var7"/>
+    <output path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var2"/>
+    <output derivedFrom="MB:JSON_schema_in_swagger_document" path="/vivareal-loader.yaml" var="var3"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="io" uri="http://www.ibm.com/iib/msl/json"/>
+    </namespaces>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="addRealEstate_MapError">
+        <input path="$var5/mb:env(Environment)">
+            <cast castType="userDefined" path="Variables/any" qualifier="exceptionList" ref="var4" var="any"/>
+        </input>
+        <output path="$var7/mb:env(Environment)" var="Environment">
+            <cast castType="userDefined" path="$Environment/Variables/any" qualifier="exceptionList" ref="var4" var="any1"/>
+        </output>
+        <output namespace="http://www.ibm.com/iib/msl/json" path="$var2/mb:msg(JSON,assembly,JSON,Properties)" var="ComIbmMessageAssembly_JSON1">
+            <cast derivedFrom="MB:JSON_operation_response" path="$ComIbmMessageAssembly_JSON1/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}object_addRealEstate_200" ref="var3" var="anyType"/>
+        </output>
+        <passthrough>
+            <input path="."/>
+            <output path="$Environment/."/>
+            <updates/>
+        </passthrough>
+        <move>
+            <input path="Variables/exceptionList"/>
+            <output path="$ComIbmMessageAssembly_JSON1/JSON/spath('Data',2)/message"/>
+        </move>
+        <assign value="500">
+            <output path="$ComIbmMessageAssembly_JSON1/JSON/spath('Data',2)/code"/>
+        </assign>
+    </mappingDeclaration>
+</mappingRoot>

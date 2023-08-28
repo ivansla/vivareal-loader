@@ -1,0 +1,9 @@
+
+
+CREATE FUNCTION stringToTimestamp (IN source CHARACTER) RETURNS TIMESTAMP
+BEGIN
+	DECLARE target TIMESTAMP;
+	DECLARE pattern CHARACTER 'yyyy-MM-dd''T''HH:mm:ss.SSS''Z''';
+	SET target = CAST(source AS TIMESTAMP FORMAT pattern);
+   	RETURN target;
+END;

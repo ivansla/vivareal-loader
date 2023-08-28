@@ -234,12 +234,10 @@
                         "type": "object",
                         "properties": {
                           "lon": {
-                            "type": "number",
-                            "format": "double"
+                            "type": "string"
                           },
                           "lat": {
-                            "type": "number",
-                            "format": "double"
+                            "type": "string"
                           },
                           "source": {
                             "type": "string"
@@ -654,12 +652,10 @@
                 "type": "object",
                 "properties": {
                   "lon": {
-                    "type": "number",
-                    "format": "double"
+                    "type": "string"
                   },
                   "lat": {
-                    "type": "number",
-                    "format": "double"
+                    "type": "string"
                   },
                   "source": {
                     "type": "string"

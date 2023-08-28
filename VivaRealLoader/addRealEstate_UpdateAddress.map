@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.5.0" xmlns:map="default">
+    <input path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var"/>
+    <input derivedFrom="MB:JSON_schema_in_swagger_document" path="/vivareal-loader.yaml" var="var1"/>
+    <input path="db:database(/FREEPDB1.dbm,FREEPDB1,db:schema-tables(IVANSLA,REALESTATE))" var="FREEPDB11"/>
+    <input path="jar:file://!com/ibm/msl/mapping/rdb/xsds/dbreturn.xsd" var="var4"/>
+    <output path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var2"/>
+    <output derivedFrom="MB:JSON_schema_in_swagger_document" path="/vivareal-loader.yaml" var="var3"/>
+    <output path="db:table(/FREEPDB1.dbm,FREEPDB1,IVANSLA,ADDRESS)" var="ADDRESS"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="io" uri="http://www.ibm.com/iib/msl/json"/>
+        <namespace kind="extension" prefix="fn" uri="http://www.w3.org/2005/xpath-functions"/>
+    </namespaces>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="addRealEstate_UpdateAddress">
+        <input derivedFrom="MB:JSON_operation_name:addRealEstate" namespace="http://www.ibm.com/iib/msl/json" path="$var/mb:msg(JSON,assembly,JSON,Properties,LocalEnvironment)" var="ComIbmMessageAssembly_JSON">
+            <cast derivedFrom="MB:JSON_operation_request" path="$ComIbmMessageAssembly_JSON/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}object_addRealEstate_body" ref="var1" var="anyType"/>
+        </input>
+        <input path="$FREEPDB11/db:select(fn:false(),ResultSet(IVANSLA/REALESTATE/ADDRESSID),db:where('IVANSLA.REALESTATE.SOURCEID =  ? AND IVANSLA.REALESTATE.LISTINGID = ?1','?1'=$ComIbmMessageAssembly_JSON/io:JSON//Data/id,'?'=$ComIbmMessageAssembly_JSON/io:JSON//Data/sourceId))" var="dbselect"/>
+        <output namespace="http://www.ibm.com/iib/msl/json" path="$var2/mb:msg(JSON,assembly,JSON,Properties)" var="ComIbmMessageAssembly_JSON1">
+            <cast derivedFrom="MB:JSON_operation_response" path="$ComIbmMessageAssembly_JSON1/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}object_addRealEstate_200" ref="var3" var="anyType1"/>
+        </output>
+        <output path="$ADDRESS/db:update(fn:false(),fn:true(),db:where('IVANSLA.ADDRESS.ID =  ?','?'=$dbselect/ResultSet/IVANSLA/REALESTATE/ADDRESSID),ID,COUNTRY,ZIPCODE,GEOJSON,CITY,LEVEL,PRECISION,CONFIDENCE,STATEACRONYM,SOURCE,IBGECITYID,ZONE,STREET,LOCATIONID,DISTRICT,NAME,STATE,STREETNUMBER,NEIGHBORHOOD,LONGITUDE,LATITUDE,POISLIST,POIS,VALUABLEZONES)" var="dbupdate"/>
+        <move>
+            <input path="$ComIbmMessageAssembly_JSON/Properties"/>
+            <output path="$ComIbmMessageAssembly_JSON1/Properties"/>
+        </move>
+        <task type="info">
+            <documentation description="The REST API input data of operation addRealEstate.">This Task is provided to show the location of the REST API input data of operation addRealEstate.
+The path and query parameters are provided under "Parameters".
+You may need to use these as inputs to your mappings.</documentation>
+            <input path="$ComIbmMessageAssembly_JSON/LocalEnvironment/REST/Input"/>
+        </task>
+        <transaction>
+            <update ref="dbupdate">
+                <input path="$ComIbmMessageAssembly_JSON/JSON/spath('Data',2)/address" var="address"/>
+                <output path="$dbupdate/."/>
+                <move>
+                    <input path="$address/country"/>
+                    <output path="COUNTRY"/>
+                </move>
+                <move>
+                    <input path="$address/zipCode"/>
+                    <output path="ZIPCODE"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/geoJson"/>
+                    <output path="GEOJSON"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/city"/>
+                    <output path="CITY"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/precision"/>
+                    <output path="PRECISION"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/confidence"/>
+                    <output path="CONFIDENCE"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/stateAcronym"/>
+                    <output path="STATEACRONYM"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/ibgeCityId"/>
+                    <output path="IBGECITYID"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/zone"/>
+                    <output path="ZONE"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/street"/>
+                    <output path="STREET"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/locationId"/>
+                    <output path="LOCATIONID"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/district"/>
+                    <output path="DISTRICT"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/name"/>
+                    <output path="NAME"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/state"/>
+                    <output path="STATE"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/streetNumber"/>
+                    <output path="STREETNUMBER"/>
+                </move>
+                <move automap="true">
+                    <input path="$address/neighborhood"/>
+                    <output path="NEIGHBORHOOD"/>
+                </move>
+                <move>
+                    <input path="$address/source"/>
+                    <output path="SOURCE"/>
+                </move>
+                <function ref="fn:string-join">
+                    <input path="$address/poisList/Item" var="Item3"/>
+                    <output path="POISLIST"/>
+                    <param name="strings" value="$Item3"/>
+                    <param name="separator" value="';'"/>
+                </function>
+                <function ref="fn:string-join">
+                    <input path="$address/pois/Item" var="Item4"/>
+                    <output path="POIS"/>
+                    <param name="strings" value="$Item4"/>
+                    <param name="separator" value="';'"/>
+                </function>
+                <function ref="fn:string-join">
+                    <input path="$address/valuableZones/Item" var="Item5"/>
+                    <output path="VALUABLEZONES"/>
+                    <param name="strings" value="$Item5"/>
+                    <param name="separator" value="';'"/>
+                </function>
+                <move>
+                    <input path="$address/point/lon"/>
+                    <output path="LONGITUDE"/>
+                </move>
+                <move>
+                    <input path="$address/point/lat"/>
+                    <output path="LATITUDE"/>
+                </move>
+            </update>
+            <return>
+                <input path="$var4/DBUpdateReturn"/>
+            </return>
+        </transaction>
+        <move>
+            <input path="$ComIbmMessageAssembly_JSON/JSON"/>
+            <output path="$ComIbmMessageAssembly_JSON1/JSON"/>
+        </move>
+    </mappingDeclaration>
+</mappingRoot>

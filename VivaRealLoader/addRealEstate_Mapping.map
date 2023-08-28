@@ -29,7 +29,7 @@
         <output path="$PRICINGINFO/db:insert(fn:false(),ID,YEARLYIPTU,PRICE,BUSINESSTYPE,MONTHLYCONDOFEE)" var="dbinsert2"/>
         <output path="$ADDRESS1/db:insert(fn:false(),ID,COUNTRY,ZIPCODE,GEOJSON,CITY,LEVEL,PRECISION,CONFIDENCE,STATEACRONYM,SOURCE,IBGECITYID,ZONE,STREET,LOCATIONID,DISTRICT,NAME,STATE,STREETNUMBER,NEIGHBORHOOD,LONGITUDE,LATITUDE,POISLIST,POIS,VALUABLEZONES)" var="dbinsert3"/>
         <output path="$LINK/db:insert(fn:false(),STREETNUMBER,STATE,CITY,ZONE,NEIGHBORHOOD,STREET,ID,NAME,HREF,REL)" var="dbinsert4"/>
-        <output path="$REALESTATE1/db:insert(fn:false(),ID,SOURCEID,DISPLAYADDRESSTYPE,CONTRACTTYPE,USABLEAREAS,CREATEDAT,UNITTYPES,REALESTATEID,PARKINGSPACES,UPDATEDAT,SUITES,BATHROOMS,USAGETYPES,BEDROOMS,BUILDINGS,STATUS,AMENITIES,CONSTRUCTIONSTATUS,DESCRIPTION,TITLE,FLOORS,PROPERTYTYPE,UNITSUBTYPES,CEILINGHEIGHT,LEGACYID,STAMPS,TOTALAREAS,SEARCHABLEAMENITIES,CAPACITYLIMIT,ADDRESSID)" var="dbinsert5"/>
+        <output path="$REALESTATE1/db:insert(fn:false(),ID,SOURCEID,DISPLAYADDRESSTYPE,CONTRACTTYPE,USABLEAREAS,CREATEDAT,UNITTYPES,REALESTATEID,PARKINGSPACES,UPDATEDAT,SUITES,BATHROOMS,USAGETYPES,BEDROOMS,BUILDINGS,STATUS,AMENITIES,CONSTRUCTIONSTATUS,DESCRIPTION,TITLE,FLOORS,PROPERTYTYPE,UNITSUBTYPES,CEILINGHEIGHT,LEGACYID,STAMPS,TOTALAREAS,SEARCHABLEAMENITIES,CAPACITYLIMIT,ADDRESSID,LISTINGID)" var="dbinsert5"/>
         <move>
             <input path="$ComIbmMessageAssembly_JSON/Properties"/>
             <output path="$ComIbmMessageAssembly_JSON1/Properties"/>
@@ -352,6 +352,10 @@ You may need to use these as inputs to your mappings.</documentation>
                             <output path="UPDATEDAT"/>
                             <param name="source" value="$updatedAt"/>
                         </customFunction>
+                        <move>
+                            <input path="$Data1/id"/>
+                            <output path="LISTINGID"/>
+                        </move>
                     </insert>
                     <return>
                         <input path="$var6/DBInsertReturn"/>

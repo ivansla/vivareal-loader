@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.5.0" xmlns:map="default">
-    <input path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var"/>
-    <input derivedFrom="MB:JSON_schema_in_swagger_document" path="/vivareal-loader.yaml" var="var1"/>
     <input path="db:database(/FREEPDB1.dbm,FREEPDB1,db:schema-tables(IVANSLA,REALESTATE))" var="FREEPDB1"/>
     <input path="db:routine(/FREEPDB1.dbm,FREEPDB1,IVANSLA,GETADDREALESTATEIDS,REALESTATEID,ADDRESSID,PRICINGINFOID,LINKID)" var="GETADDREALESTATEIDS"/>
+    <input path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var6"/>
+    <input derivedFrom="MB:JSON_schema_in_swagger_document" path="/vivareal-loader.yaml" var="var7"/>
     <output path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var2"/>
-    <output derivedFrom="MB:JSON_schema_in_swagger_document" path="/vivareal-loader.yaml" var="var3"/>
     <output path="db:routine(/FREEPDB1.dbm,FREEPDB1,IVANSLA,GETADDREALESTATEIDS,REALESTATEID,ADDRESSID,PRICINGINFOID,LINKID)" var="GETADDREALESTATEIDS1"/>
     <output path="db:table(/FREEPDB1.dbm,FREEPDB1,IVANSLA,PRICINGINFO)" var="PRICINGINFO1"/>
     <output path="db:table(/FREEPDB1.dbm,FREEPDB1,IVANSLA,REALESTATE_PRICINGINFO)" var="REALESTATEPRICINGINFO2"/>
@@ -17,34 +16,24 @@
     </namespaces>
     <generation engine="xquery"/>
     <mappingDeclaration name="addRealEstate_InsertPricingInfo">
-        <input derivedFrom="MB:JSON_operation_name:addRealEstate" namespace="http://www.ibm.com/iib/msl/json" path="$var/mb:msg(JSON,assembly,JSON,Properties,LocalEnvironment)" var="ComIbmMessageAssembly_JSON">
-            <cast derivedFrom="MB:JSON_operation_request" path="$ComIbmMessageAssembly_JSON/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}object_addRealEstate_body" ref="var1" var="anyType"/>
+        <input path="$FREEPDB1/db:select(fn:false(),ResultSet(IVANSLA/REALESTATE/ID),db:where('IVANSLA.REALESTATE.SOURCEID =  ? AND IVANSLA.REALESTATE.LISTINGID =  ?1','?1'=$MessageAssembly/io:JSON//Data/id,'?'=$MessageAssembly/io:JSON//Data/sourceId))" var="dbselect"/>
+        <input namespace="http://www.ibm.com/iib/msl/json" path="$var6/mb:msg(JSON,assembly,JSON,Properties)" var="MessageAssembly">
+            <cast derivedFrom="MB:JSON_operation_request" path="$MessageAssembly/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}RealEstate" ref="var7" var="anyType2"/>
         </input>
-        <input path="$FREEPDB1/db:select(fn:false(),ResultSet(IVANSLA/REALESTATE/ID),db:where('IVANSLA.REALESTATE.SOURCEID =  ? AND IVANSLA.REALESTATE.LISTINGID =  ?1','?1'=$ComIbmMessageAssembly_JSON/io:JSON//Data/id,'?'=$ComIbmMessageAssembly_JSON/io:JSON//Data/sourceId))" var="dbselect"/>
         <output namespace="http://www.ibm.com/iib/msl/json" path="$var2/mb:msg(JSON,assembly,JSON,Properties)" var="ComIbmMessageAssembly_JSON1">
-            <cast derivedFrom="MB:JSON_operation_response" path="$ComIbmMessageAssembly_JSON1/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}object_addRealEstate_200" ref="var3" var="anyType1"/>
+            <cast derivedFrom="MB:JSON_operation_response" path="$ComIbmMessageAssembly_JSON1/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}Unresolved: {http://www.ibm.com/iib/msl/json}Unresolved: {http://www.ibm.com/iib/msl/json}object_addRealEstate_200" var="anyType1"/>
         </output>
         <output path="$PRICINGINFO1/db:insert(fn:false(),ID,YEARLYIPTU,PRICE,BUSINESSTYPE,MONTHLYCONDOFEE,CREATEDAT)" var="dbinsert5"/>
         <output path="$REALESTATEPRICINGINFO2/db:insert(fn:false(),REALESTATEID,PRICINGINFOID)" var="dbinsert7"/>
-        <move>
-            <input path="$ComIbmMessageAssembly_JSON/Properties"/>
-            <output path="$ComIbmMessageAssembly_JSON1/Properties"/>
-        </move>
-        <task type="info">
-            <documentation description="The REST API input data of operation addRealEstate.">This Task is provided to show the location of the REST API input data of operation addRealEstate.
-The path and query parameters are provided under "Parameters".
-You may need to use these as inputs to your mappings.</documentation>
-            <input path="$ComIbmMessageAssembly_JSON/LocalEnvironment/REST/Input"/>
-        </task>
         <transaction>
             <rdbcall>
                 <output path="$GETADDREALESTATEIDS1/db:routine-call()"/>
             </rdbcall>
             <rdbreturn>
                 <input path="$GETADDREALESTATEIDS/db:routine-return(fn:false(),fn:nilled(),0,1,2,3)" var="dbroutinereturn"/>
-                <input path="$ComIbmMessageAssembly_JSON/JSON/spath('Data',2)/pricingInfos/Item[1]" var="Item2"/>
-                <input path="$ComIbmMessageAssembly_JSON/JSON/spath('Data',2)/updatedAt" var="updatedAt4"/>
                 <input path="$dbselect/ResultSet[1]/IVANSLA/REALESTATE/ID" var="ID"/>
+                <input path="$MessageAssembly/JSON/spath('Data',2)/pricingInfos/Item[1]" var="Item"/>
+                <input path="$MessageAssembly/JSON/spath('Data',2)/updatedAt" var="updatedAt1"/>
                 <output path="$dbinsert5/." var="dbinsert6"/>
                 <output path="$dbinsert7/." var="dbinsert8"/>
                 <move>
@@ -60,27 +49,31 @@ You may need to use these as inputs to your mappings.</documentation>
                     <output path="$dbinsert8/REALESTATEID"/>
                 </move>
                 <move>
-                    <input path="$Item2/yearlyIptu"/>
-                    <output path="$dbinsert6/YEARLYIPTU"/>
-                </move>
-                <move>
-                    <input path="$Item2/price"/>
+                    <input path="$Item/price"/>
                     <output path="$dbinsert6/PRICE"/>
                 </move>
                 <move>
-                    <input path="$Item2/businessType"/>
+                    <input path="$Item/yearlyIptu"/>
+                    <output path="$dbinsert6/YEARLYIPTU"/>
+                </move>
+                <move>
+                    <input path="$Item/businessType"/>
                     <output path="$dbinsert6/BUSINESSTYPE"/>
                 </move>
                 <move>
-                    <input path="$Item2/monthlyCondoFee"/>
+                    <input path="$Item/monthlyCondoFee"/>
                     <output path="$dbinsert6/MONTHLYCONDOFEE"/>
                 </move>
                 <customFunction lang="esql" ref="MappingUtils:stringToTimestamp">
-                    <input path="$updatedAt4/." var="updatedAt3"/>
+                    <input path="$updatedAt1/." var="updatedAt"/>
                     <output path="$dbinsert6/CREATEDAT"/>
-                    <param name="source" value="$updatedAt3"/>
+                    <param name="source" value="$updatedAt"/>
                 </customFunction>
             </rdbreturn>
         </transaction>
+        <move>
+            <input path="$MessageAssembly/Properties"/>
+            <output path="$ComIbmMessageAssembly_JSON1/Properties"/>
+        </move>
     </mappingDeclaration>
 </mappingRoot>

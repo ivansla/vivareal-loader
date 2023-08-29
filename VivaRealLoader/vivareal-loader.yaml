@@ -1,704 +1,221 @@
-{
-  "openapi": "3.0.3",
-  "info": {
-    "title": "Viva Real Loader",
-    "version": "1.0-SNAPSHOT"
-  },
-  "servers": [
-    {
-      "url": "https://petstore3.swagger.io/api/v3"
-    }
-  ],
-  "paths": {
-    "/vivareal-loader": {
-      "post": {
-        "summary": "Add a new Real Estate to DB",
-        "description": "Add a new Real Estate to DB",
-        "operationId": "addRealEstate",
-        "requestBody": {
-          "description": "Create a new Real Estate to DB",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "sourceId": {
-                    "type": "string"
-                  },
-                  "displayAddressType": {
-                    "type": "string"
-                  },
-                  "contractType": {
-                    "type": "string"
-                  },
-                  "usableAreas": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "createdAt": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "unitTypes": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "id": {
-                    "type": "string"
-                  },
-                  "parkingSpaces": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "updatedAt": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "suites": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "bathrooms": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "usageTypes": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "bedrooms": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "pricingInfos": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "yearlyIptu": {
-                          "type": "string"
-                        },
-                        "price": {
-                          "type": "string"
-                        },
-                        "businessType": {
-                          "type": "string"
-                        },
-                        "monthlyCondoFee": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "buildings": {
-                    "type": "string"
-                  },
-                  "status": {
-                    "type": "string"
-                  },
-                  "amenities": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "constructionStatus": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "title": {
-                    "type": "string"
-                  },
-                  "floors": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "propertyType": {
-                    "type": "string"
-                  },
-                  "unitSubTypes": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "ceilingHeight": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "legacyId": {
-                    "type": "string"
-                  },
-                  "stamps": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "address": {
-                    "type": "object",
-                    "properties": {
-                      "country": {
-                        "type": "string"
-                      },
-                      "zipCode": {
-                        "type": "string"
-                      },
-                      "geoJson": {
-                        "type": "string"
-                      },
-                      "city": {
-                        "type": "string"
-                      },
-                      "level": {
-                        "type": "string"
-                      },
-                      "precision": {
-                        "type": "string"
-                      },
-                      "confidence": {
-                        "type": "string"
-                      },
-                      "stateAcronym": {
-                        "type": "string"
-                      },
-                      "source": {
-                        "type": "string"
-                      },
-                      "ibgeCityId": {
-                        "type": "string"
-                      },
-                      "zone": {
-                        "type": "string"
-                      },
-                      "street": {
-                        "type": "string"
-                      },
-                      "locationId": {
-                        "type": "string"
-                      },
-                      "district": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "state": {
-                        "type": "string"
-                      },
-                      "streetNumber": {
-                        "type": "string"
-                      },
-                      "neighborhood": {
-                        "type": "string"
-                      },
-                      "poisList": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "pois": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "valuableZones": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "point": {
-                        "type": "object",
-                        "properties": {
-                          "lon": {
-                            "type": "string"
-                          },
-                          "lat": {
-                            "type": "string"
-                          },
-                          "source": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "totalAreas": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "searchableAmenities": {
-                    "type": "string"
-                  },
-                  "capacityLimit": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "type": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "xml": {
-                    "name": "##default"
-                  }
-                }
-              }
-            }
-          },
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/vivareal-loader/ping": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "success"
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Address": {
-        "type": "object",
-        "properties": {
-          "country": {
+
+"openapi": "3.0.3"
+"info":
+  "title": "Viva Real Loader"
+  "version": "1.0-SNAPSHOT"
+"servers":
+  -
+    "url": "https://petstore3.swagger.io/api/v3"
+"paths":
+  "/vivareal-loader/ping":
+    "get":
+      "responses":
+        "200":
+          "description": "success"
+  "/vivareal-loader":
+    "post":
+      "summary": "Add a new Real Estate to DB"
+      "description": "Add a new Real Estate to DB"
+      "operationId": "addRealEstate"
+      "requestBody":
+        "description": "Create a new Real Estate to DB"
+        "content":
+          "application/json":
+            "schema":
+              $ref: '#/components/schemas/RealEstate'
+        "required": true
+      "responses":
+        "200":
+          "description": "Successful operation"
+          "content":
+            "application/json":
+              "schema":
+                $ref: '#/components/schemas/ApiResponse'
+        "405":
+          "description": "Invalid input"
+"components":
+  "schemas":
+    "Address":
+      "type": "object"
+      "properties":
+        "country":
+          "type": "string"
+        "zipCode":
+          "type": "string"
+        "geoJson":
+          "type": "string"
+        "city":
+          "type": "string"
+        "level":
+          "type": "string"
+        "precision":
+          "type": "string"
+        "confidence":
+          "type": "string"
+        "stateAcronym":
+          "type": "string"
+        "source":
+          "type": "string"
+        "ibgeCityId":
+          "type": "string"
+        "zone":
+          "type": "string"
+        "street":
+          "type": "string"
+        "locationId":
+          "type": "string"
+        "district":
+          "type": "string"
+        "name":
+          "type": "string"
+        "state":
+          "type": "string"
+        "streetNumber":
+          "type": "string"
+        "neighborhood":
+          "type": "string"
+        "poisList":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "zipCode": {
+        "pois":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "geoJson": {
+        "valuableZones":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "city": {
+        "point":
+          "type": "object"
+          $ref: '#/components/schemas/Point'
+    "Point":
+      "type": "object"
+      "properties":
+        "lon":
+          "type": "number"
+          "format": "double"
+        "lat":
+          "type": "number"
+          "format": "double"
+        "source":
+          "type": "string"
+    "PricingInfo":
+      "type": "object"
+      "properties":
+        "yearlyIptu":
+          "type": "string"
+        "price":
+          "type": "string"
+        "businessType":
+          "type": "string"
+        "monthlyCondoFee":
+          "type": "string"
+    "RealEstate":
+      "type": "object"
+      "properties":
+        "sourceId":
+          "type": "string"
+        "displayAddressType":
+          "type": "string"
+        "contractType":
+          "type": "string"
+        "usableAreas":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "level": {
+        "createdAt":
+          "type": "string"
+          "format": "date-time"
+        "unitTypes":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "precision": {
+        "id":
+          "type": "string"
+        "parkingSpaces":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "confidence": {
+        "updatedAt":
+          "type": "string"
+          "format": "date-time"
+        "suites":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "stateAcronym": {
+        "bathrooms":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "source": {
+        "usageTypes":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "ibgeCityId": {
+        "bedrooms":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "zone": {
+        "pricingInfos":
+          "type": "array"
+          "items":
+            $ref: '#/components/schemas/PricingInfo'
+        "buildings":
+          "type": "string"
+        "status":
+          "type": "string"
+        "amenities":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "street": {
+        "constructionStatus":
+          "type": "string"
+        "description":
+          "type": "string"
+        "title":
+          "type": "string"
+        "floors":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "locationId": {
+        "propertyType":
+          "type": "string"
+        "unitSubTypes":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "district": {
+        "ceilingHeight":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "name": {
+        "legacyId":
+          "type": "string"
+        "stamps":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "state": {
+        "address":
+          "type": "object"
+          $ref: '#/components/schemas/Address'
+        "totalAreas":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "streetNumber": {
+        "searchableAmenities":
+          "type": "string"
+        "capacityLimit":
+          "type": "array"
+          "items":
             "type": "string"
-          },
-          "neighborhood": {
-            "type": "string"
-          },
-          "poisList": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "pois": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "valuableZones": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "point": {
-            "type": "object",
-            "properties": {
-              "lon": {
-                "type": "number",
-                "format": "double"
-              },
-              "lat": {
-                "type": "number",
-                "format": "double"
-              },
-              "source": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "Point": {
-        "type": "object",
-        "properties": {
-          "lon": {
-            "type": "number",
-            "format": "double"
-          },
-          "lat": {
-            "type": "number",
-            "format": "double"
-          },
-          "source": {
-            "type": "string"
-          }
-        }
-      },
-      "PricingInfo": {
-        "type": "object",
-        "properties": {
-          "yearlyIptu": {
-            "type": "string"
-          },
-          "price": {
-            "type": "string"
-          },
-          "businessType": {
-            "type": "string"
-          },
-          "monthlyCondoFee": {
-            "type": "string"
-          }
-        }
-      },
-      "RealEstate": {
-        "type": "object",
-        "properties": {
-          "sourceId": {
-            "type": "string"
-          },
-          "displayAddressType": {
-            "type": "string"
-          },
-          "contractType": {
-            "type": "string"
-          },
-          "usableAreas": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "unitTypes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "id": {
-            "type": "string"
-          },
-          "parkingSpaces": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "suites": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "bathrooms": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "usageTypes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "bedrooms": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "pricingInfos": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "yearlyIptu": {
-                  "type": "string"
-                },
-                "price": {
-                  "type": "string"
-                },
-                "businessType": {
-                  "type": "string"
-                },
-                "monthlyCondoFee": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "buildings": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "amenities": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "constructionStatus": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "floors": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "propertyType": {
-            "type": "string"
-          },
-          "unitSubTypes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "ceilingHeight": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "legacyId": {
-            "type": "string"
-          },
-          "stamps": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "address": {
-            "type": "object",
-            "properties": {
-              "country": {
-                "type": "string"
-              },
-              "zipCode": {
-                "type": "string"
-              },
-              "geoJson": {
-                "type": "string"
-              },
-              "city": {
-                "type": "string"
-              },
-              "level": {
-                "type": "string"
-              },
-              "precision": {
-                "type": "string"
-              },
-              "confidence": {
-                "type": "string"
-              },
-              "stateAcronym": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
-              },
-              "ibgeCityId": {
-                "type": "string"
-              },
-              "zone": {
-                "type": "string"
-              },
-              "street": {
-                "type": "string"
-              },
-              "locationId": {
-                "type": "string"
-              },
-              "district": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "streetNumber": {
-                "type": "string"
-              },
-              "neighborhood": {
-                "type": "string"
-              },
-              "poisList": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "pois": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "valuableZones": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "point": {
-                "type": "object",
-                "properties": {
-                  "lon": {
-                    "type": "string"
-                  },
-                  "lat": {
-                    "type": "string"
-                  },
-                  "source": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "totalAreas": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "searchableAmenities": {
-            "type": "string"
-          },
-          "capacityLimit": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "ApiResponse": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "type": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "xml": {
-          "name": "##default"
-        }
-      }
-    }
-  }
-}
+    "ApiResponse":
+      "type": "object"
+      "properties":
+        "code":
+          "type": "integer"
+          "format": "int32"
+        "type":
+          "type": "string"
+        "message":
+          "type": "string"
+      "xml":
+        "name": "##default"

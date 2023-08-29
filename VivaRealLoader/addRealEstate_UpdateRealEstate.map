@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.5.0" xmlns:map="default">
-    <input path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var"/>
-    <input derivedFrom="MB:JSON_schema_in_swagger_document" path="/vivareal-loader.yaml" var="var1"/>
-    <input path="jar:file://!com/ibm/msl/mapping/rdb/xsds/dbreturn.xsd" var="var5"/>
-    <output path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var2"/>
-    <output derivedFrom="MB:JSON_schema_in_swagger_document" path="/vivareal-loader.yaml" var="var3"/>
+    <input path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var4"/>
+    <input derivedFrom="MB:JSON_schema_in_swagger_document" path="/vivareal-loader.yaml" var="var6"/>
+    <input path="jar:file://!com/ibm/msl/mapping/rdb/xsds/dbreturn.xsd" var="var7"/>
     <output path="db:table(/FREEPDB1.dbm,FREEPDB1,IVANSLA,REALESTATE)" var="REALESTATE1"/>
+    <output path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var"/>
+    <output derivedFrom="MB:JSON_schema_in_swagger_document" path="/vivareal-loader.yaml" var="var1"/>
     <imports>
         <import kind="esql" namespace="/MappingUtils.esql"/>
     </imports>
@@ -14,52 +14,87 @@
     </namespaces>
     <generation engine="xquery"/>
     <mappingDeclaration name="addRealEstate_UpdateRealEstate">
-        <input derivedFrom="MB:JSON_operation_name:addRealEstate" namespace="http://www.ibm.com/iib/msl/json" path="$var/mb:msg(JSON,assembly,JSON,Properties,LocalEnvironment)" var="ComIbmMessageAssembly_JSON">
-            <cast derivedFrom="MB:JSON_operation_request" path="$ComIbmMessageAssembly_JSON/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}object_addRealEstate_body" ref="var1" var="anyType"/>
+        <input namespace="http://www.ibm.com/iib/msl/json" path="$var4/mb:msg(JSON,assembly,JSON,Properties)" var="MessageAssembly">
+            <cast derivedFrom="MB:JSON_operation_request" path="$MessageAssembly/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}RealEstate" ref="var6" var="anyType2"/>
         </input>
-        <output namespace="http://www.ibm.com/iib/msl/json" path="$var2/mb:msg(JSON,assembly,JSON,Properties)" var="ComIbmMessageAssembly_JSON1">
-            <cast derivedFrom="MB:JSON_operation_response" path="$ComIbmMessageAssembly_JSON1/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}object_addRealEstate_200" ref="var3" var="anyType1"/>
+        <output path="$REALESTATE1/db:update(fn:false(),fn:true(),db:where('IVANSLA.REALESTATE.SOURCEID =  ? AND IVANSLA.REALESTATE.LISTINGID =  ?1','?1'=$MessageAssembly/io:JSON//Data/id,'?'=$MessageAssembly/io:JSON//Data/sourceId),ID,SOURCEID,DISPLAYADDRESSTYPE,CONTRACTTYPE,USABLEAREAS,CREATEDAT,UNITTYPES,REALESTATEID,PARKINGSPACES,UPDATEDAT,SUITES,BATHROOMS,USAGETYPES,BEDROOMS,BUILDINGS,STATUS,AMENITIES,CONSTRUCTIONSTATUS,DESCRIPTION,TITLE,FLOORS,PROPERTYTYPE,UNITSUBTYPES,CEILINGHEIGHT,LEGACYID,STAMPS,TOTALAREAS,SEARCHABLEAMENITIES,CAPACITYLIMIT,ADDRESSID,LISTINGID)" var="dbupdate1"/>
+        <output namespace="http://www.ibm.com/iib/msl/json" path="$var/mb:msg(JSON,assembly,JSON,Properties)" var="MessageAssembly1">
+            <cast derivedFrom="MB:JSON_operation_response" path="$MessageAssembly1/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}RealEstate" ref="var1" var="anyType"/>
         </output>
-        <output path="$REALESTATE1/db:update(fn:false(),fn:true(),db:where('IVANSLA.REALESTATE.SOURCEID =  ? AND IVANSLA.REALESTATE.LISTINGID =  ?1','?1'=$ComIbmMessageAssembly_JSON/io:JSON//Data/id,'?'=$ComIbmMessageAssembly_JSON/io:JSON//Data/sourceId),ID,SOURCEID,DISPLAYADDRESSTYPE,CONTRACTTYPE,USABLEAREAS,CREATEDAT,UNITTYPES,REALESTATEID,PARKINGSPACES,UPDATEDAT,SUITES,BATHROOMS,USAGETYPES,BEDROOMS,BUILDINGS,STATUS,AMENITIES,CONSTRUCTIONSTATUS,DESCRIPTION,TITLE,FLOORS,PROPERTYTYPE,UNITSUBTYPES,CEILINGHEIGHT,LEGACYID,STAMPS,TOTALAREAS,SEARCHABLEAMENITIES,CAPACITYLIMIT,ADDRESSID,LISTINGID)" var="dbupdate1"/>
-        <move>
-            <input path="$ComIbmMessageAssembly_JSON/Properties"/>
-            <output path="$ComIbmMessageAssembly_JSON1/Properties"/>
-        </move>
-        <task type="info">
-            <documentation description="The REST API input data of operation addRealEstate.">This Task is provided to show the location of the REST API input data of operation addRealEstate.
-The path and query parameters are provided under "Parameters".
-You may need to use these as inputs to your mappings.</documentation>
-            <input path="$ComIbmMessageAssembly_JSON/LocalEnvironment/REST/Input"/>
-        </task>
         <transaction>
             <update ref="dbupdate1">
-                <input path="$ComIbmMessageAssembly_JSON/JSON/spath('Data',2)" var="Data1"/>
+                <input path="$MessageAssembly/JSON/spath('Data',2)" var="Data"/>
                 <output path="$dbupdate1/."/>
-                <move>
-                    <input path="$Data1/title"/>
-                    <output path="TITLE"/>
-                </move>
-                <move>
-                    <input path="$Data1/sourceId"/>
+                <move automap="true">
+                    <input path="$Data/sourceId"/>
                     <output path="SOURCEID"/>
                 </move>
-                <move>
-                    <input path="$Data1/id"/>
-                    <output path="LISTINGID"/>
+                <move automap="true">
+                    <input path="$Data/displayAddressType"/>
+                    <output path="DISPLAYADDRESSTYPE"/>
+                </move>
+                <move automap="true">
+                    <input path="$Data/contractType"/>
+                    <output path="CONTRACTTYPE"/>
                 </move>
                 <customFunction lang="esql" ref="MappingUtils:stringToTimestamp">
-                    <input path="$Data1/updatedAt" var="updatedAt"/>
+                    <input path="$Data/createdAt" var="createdAt"/>
+                    <output path="CREATEDAT"/>
+                    <param name="source" value="$createdAt"/>
+                </customFunction>
+                <customFunction lang="esql" ref="MappingUtils:stringToTimestamp">
+                    <input path="$Data/updatedAt" var="updatedAt"/>
                     <output path="UPDATEDAT"/>
                     <param name="source" value="$updatedAt"/>
                 </customFunction>
+                <move automap="true">
+                    <input path="$Data/buildings"/>
+                    <output path="BUILDINGS"/>
+                </move>
+                <move automap="true">
+                    <input path="$Data/status"/>
+                    <output path="STATUS"/>
+                </move>
+                <move automap="true">
+                    <input path="$Data/constructionStatus"/>
+                    <output path="CONSTRUCTIONSTATUS"/>
+                </move>
+                <move automap="true">
+                    <input path="$Data/description"/>
+                    <output path="DESCRIPTION"/>
+                </move>
+                <move automap="true">
+                    <input path="$Data/title"/>
+                    <output path="TITLE"/>
+                </move>
+                <move automap="true">
+                    <input path="$Data/propertyType"/>
+                    <output path="PROPERTYTYPE"/>
+                </move>
+                <move automap="true">
+                    <input path="$Data/legacyId"/>
+                    <output path="LEGACYID"/>
+                </move>
+                <move automap="true">
+                    <input path="$Data/searchableAmenities"/>
+                    <output path="SEARCHABLEAMENITIES"/>
+                </move>
+                <move>
+                    <input path="$Data/id"/>
+                    <output path="LISTINGID"/>
+                </move>
             </update>
             <return>
-                <input path="$var5/DBUpdateReturn"/>
+                <input path="$var7/DBUpdateReturn"/>
             </return>
         </transaction>
         <move>
-            <input path="$ComIbmMessageAssembly_JSON/JSON"/>
-            <output path="$ComIbmMessageAssembly_JSON1/JSON"/>
+            <input path="$MessageAssembly/Properties"/>
+            <output path="$MessageAssembly1/Properties"/>
+        </move>
+        <move>
+            <input path="$MessageAssembly/JSON/spath('Data',2)"/>
+            <output path="$MessageAssembly1/JSON/spath('Data',2)"/>
         </move>
     </mappingDeclaration>
 </mappingRoot>
